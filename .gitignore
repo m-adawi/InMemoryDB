@@ -1,0 +1,14 @@
+/ClientSide/target/
+/Common/target/
+/.idea/
+/Records/
+/ServerSide/target/
+*.log
+*.db
+*.iml
+/ServerSide/src/test/java/DummyTest.java
+/ServerSide/src/test/java/TestClone.java
+/ServerSide/src/test/java/TestEquals.java
+/ServerSide/src/test/java/TestLocks.java
+/ServerSide/src/test/java/TestLogger.java
+/ServerSide/src/test/java/TestZql.java
