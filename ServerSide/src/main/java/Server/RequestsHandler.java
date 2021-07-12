@@ -2,9 +2,10 @@ package Server;
 
 import Communication.Connection;
 import DB.InvalidDatabaseOperationException;
-import StudentDB.Commands.Command;
-import StudentDB.Commands.CommandsGenerator;
-import StudentDB.Database;
+import DB.Commands.Command;
+import DB.Commands.CommandsGenerator;
+import DB.Commands.UnsupportedSQLStatementException;
+import DB.Database;
 import org.gibello.zql.ParseException;
 
 import java.io.IOException;
@@ -22,65 +23,54 @@ public class RequestsHandler implements Runnable {
 
     @Override
     public void run() {
-        try {
+        try(connection) {
             checkCredentials();
             connection.send("Login successful");
             while (true){
-                String sqlCommand = connection.receive();
-                if(sqlCommand == null)
-                    return;
-                else if(sqlCommand.equalsIgnoreCase("exit;")) {
-                    connection.send("Exited");
+                String sqlQuery = connection.receive();
+                if(isExitQuery(sqlQuery)){
+                    connection.send("Existed");
                     return;
                 }
-                String result = serveQuery(sqlCommand);
-                connection.send(result);
+                serveQuery(sqlQuery);
             }
-        } catch (InvalidCredentialsException | InvalidDatabaseOperationException e) {
-            sendExceptionMessage(e);
-        } catch (IOException e) {
+        } catch (InvalidCredentialsException ignored) {
+            // end connection
+        } catch (Exception | Error e) {
             ServerLogger.log(e);
-        }
-        finally {
-            try {
-                connection.close();
-            } catch (IOException e) {
-                ServerLogger.log(e);
-            }
         }
     }
 
-    private void checkCredentials() throws InvalidCredentialsException {
-        try {
-            String username = connection.receive();
-            String password = connection.receive();
-            if (!areValidCredentials(username, password))
-                throw new InvalidCredentialsException();
-        } catch (IOException e) {
-            ServerLogger.log(e);
+    private void checkCredentials() throws InvalidCredentialsException, IOException {
+        String username = connection.receive();
+        String password = connection.receive();
+        if (!areValidCredentials(username, password)) {
+            InvalidCredentialsException e = new InvalidCredentialsException();
+            sendExceptionMessage(e);
+            throw e;
         }
     }
 
     private boolean areValidCredentials(String username, String password) {
-        // TODO
+        // TODO authentication
         return username.equals("malek") && password.equals("123");
     }
 
-    private void sendExceptionMessage(Exception e){
-        try {
-            connection.send(e.getMessage());
-        } catch (IOException ioException) {
-            ServerLogger.log(e);
-        }
+    private void sendExceptionMessage(Exception e) throws IOException {
+        connection.send(e.getMessage());
     }
 
-    private String serveQuery(String sqlCommand) {
-        Command command = null;
+    private boolean isExitQuery(String sqlQuery) {
+        return sqlQuery.equalsIgnoreCase("exit;");
+    }
+
+    private void serveQuery(String sqlCommand) throws IOException {
         try {
-            command = commandsGenerator.generateFromSqlQuery(sqlCommand);
-        } catch (ParseException e) {
-            return "Syntax error";
+            Command command = commandsGenerator.generateFromSqlQuery(sqlCommand);
+            String result = database.execute(command);
+            connection.send(result);
+        } catch (ParseException | InvalidDatabaseOperationException | UnsupportedSQLStatementException e) {
+            sendExceptionMessage(e);
         }
-        return database.execute(command);
     }
 }

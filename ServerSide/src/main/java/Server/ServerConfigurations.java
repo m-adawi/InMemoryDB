@@ -1,7 +1,5 @@
 package Server;
 
-import StudentDB.Database;
-
 public class ServerConfigurations {
     private static final ServerConfigurations configurations = new ServerConfigurations();
     private int cacheSize;

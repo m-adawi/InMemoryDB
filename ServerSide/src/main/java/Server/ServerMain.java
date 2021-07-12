@@ -13,7 +13,7 @@ public class ServerMain {
                 Connection connection = serverConnection.acceptNewConnection();
                 Thread newTask = new Thread(new RequestsHandler(connection));
                 newTask.start();
-            } catch (Exception e) {
+            } catch (Exception | Error e) {
                 ServerLogger.log(e);
             }
         }

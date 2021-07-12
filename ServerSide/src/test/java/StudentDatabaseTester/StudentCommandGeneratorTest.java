@@ -1,11 +1,11 @@
 package StudentDatabaseTester;
 
 import DB.Record;
-import StudentDB.Commands.Command;
-import StudentDB.Commands.CommandsGenerator;
-import StudentDB.Commands.InsertRecordCommand;
-import StudentDB.StudentID;
-import StudentDB.StudentRecord;
+import DB.Commands.Command;
+import DB.Commands.CommandsGenerator;
+import DB.Commands.InsertRecordCommand;
+import DB.Attributes.StudentID;
+import DB.StudentRecord;
 import org.gibello.zql.ParseException;
 import org.junit.Test;
 

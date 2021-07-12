@@ -1,5 +1,7 @@
 package DB;
 
+import DB.Attributes.Attribute;
+
 import java.io.Serializable;
 
 public interface Record extends Serializable, Cloneable {

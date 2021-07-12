@@ -1,10 +1,10 @@
 package StudentDatabaseTester;
 
-import DB.Attribute;
+import DB.Attributes.Attribute;
 import DB.InvalidDatabaseOperationException;
-import DB.NullAttribute;
-import StudentDB.StudentAttributeFactory;
-import StudentDB.StudentAttributeType;
+import DB.Attributes.NullAttribute;
+import DB.Attributes.StudentAttributeFactory;
+import DB.Attributes.StudentAttributeType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

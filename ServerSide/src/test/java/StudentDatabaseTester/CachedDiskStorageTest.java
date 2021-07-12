@@ -1,6 +1,6 @@
 package StudentDatabaseTester;
 
-import StudentDB.CachedDiskDatabaseStorage;
+import DB.Storages.CachedDiskDatabaseStorage;
 import org.junit.BeforeClass;
 
 public class CachedDiskStorageTest extends DatabaseStorageTest {

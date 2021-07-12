@@ -1,6 +1,6 @@
 package StudentDatabaseTester;
 
-import StudentDB.DiskDatabaseStorage;
+import DB.Storages.DiskDatabaseStorage;
 import org.junit.BeforeClass;
 
 public class DiskStorageTest extends DatabaseStorageTest {

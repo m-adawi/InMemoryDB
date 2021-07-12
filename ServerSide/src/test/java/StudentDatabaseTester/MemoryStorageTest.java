@@ -1,10 +1,10 @@
 package StudentDatabaseTester;
 
 import DB.Record;
-import DB.RecordNotFoundException;
-import StudentDB.MemoryStorage;
-import StudentDB.StudentID;
-import StudentDB.StudentRecord;
+import DB.Storages.RecordNotFoundException;
+import DB.Storages.MemoryStorage;
+import DB.Attributes.StudentID;
+import DB.StudentRecord;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -3,8 +3,8 @@ package StudentDatabaseTester;
 import DB.DatabaseKey;
 import DB.Record;
 import DB.RecordsLocker;
-import StudentDB.StudentID;
-import StudentDB.StudentRecord;
+import DB.Attributes.StudentID;
+import DB.StudentRecord;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -12,3 +12,4 @@
 /ServerSide/src/test/java/TestLocks.java
 /ServerSide/src/test/java/TestLogger.java
 /ServerSide/src/test/java/TestZql.java
+*.zip
