@@ -2,8 +2,9 @@ package DB.Commands;
 
 import DB.Database;
 
-public interface Command {
-    Database database = Database.getDatabase();
-    void execute();
+public abstract class Command {
+    protected final static Database database = Database.getDatabase();
+
+    public abstract String execute();
 }
 

@@ -2,7 +2,7 @@ package DB.Conditions;
 
 import DB.Record;
 
-public class OrCondition extends ComplexCondition {
+public class OrCondition extends CompoundCondition {
     public OrCondition(Condition... operands) {
         super(operands);
     }
@@ -10,7 +10,7 @@ public class OrCondition extends ComplexCondition {
     @Override
     public boolean isSatisfiedOnRecord(Record record) {
         for(Condition condition : operands){
-            if(isSatisfiedOnRecord(record))
+            if(condition.isSatisfiedOnRecord(record))
                 return true;
         }
         return false;

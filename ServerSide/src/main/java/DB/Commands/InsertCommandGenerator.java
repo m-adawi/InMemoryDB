@@ -1,9 +1,9 @@
 package DB.Commands;
 
 import DB.InvalidDatabaseOperationException;
-import DB.Record;
 import DB.Attributes.StudentAttributeType;
 import DB.Attributes.StudentID;
+import DB.Record;
 import DB.StudentRecord;
 import org.gibello.zql.ZInsert;
 import org.gibello.zql.ZStatement;

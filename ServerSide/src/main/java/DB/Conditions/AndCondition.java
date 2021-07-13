@@ -2,7 +2,7 @@ package DB.Conditions;
 
 import DB.Record;
 
-public class AndCondition extends ComplexCondition {
+public class AndCondition extends CompoundCondition {
 
     public AndCondition(Condition... operands) {
         super(operands);

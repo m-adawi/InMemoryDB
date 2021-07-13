@@ -1,9 +1,8 @@
 package DB.Commands;
 
-import DB.DatabaseKey;
 import DB.Record;
 
-public class InsertRecordCommand implements SingleRecordCommand {
+public class InsertRecordCommand extends SingleRecordCommand {
     private Record record;
 
     public InsertRecordCommand(Record record) {
@@ -15,12 +14,8 @@ public class InsertRecordCommand implements SingleRecordCommand {
     }
 
     @Override
-    public void execute() {
+    public String execute() {
         database.insertRecord(record);
-    }
-
-    @Override
-    public DatabaseKey getRecordKey() {
-        return record.getKey();
+        return "Done";
     }
 }

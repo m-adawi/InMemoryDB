@@ -3,19 +3,22 @@ package DB;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class RecordKeysCollection implements Iterable<DatabaseKey> {
-    private final Set<DatabaseKey> keySet = new HashSet<>();
+    // Thread-safe set
+    private final Set<DatabaseKey> keySet = ConcurrentHashMap.newKeySet();
 
-    public synchronized void addKey(DatabaseKey recordKey) {
+    public void addKey(DatabaseKey recordKey) {
         keySet.add(recordKey);
     }
 
-    public synchronized void removeKey(DatabaseKey recordKey) {
+    public void removeKey(DatabaseKey recordKey) {
         keySet.remove(recordKey);
     }
 
-    public synchronized void removeAllKeys(){
+    public void removeAllKeys(){
         keySet.clear();
     }
 

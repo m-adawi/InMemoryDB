@@ -7,7 +7,7 @@ import org.gibello.zql.ZExpression;
 public class ConditionFactory {
     private static final ConditionFactory factory = new ConditionFactory();
 
-    public ConditionFactory getInstance() {
+    public static ConditionFactory getInstance() {
         return factory;
     }
 

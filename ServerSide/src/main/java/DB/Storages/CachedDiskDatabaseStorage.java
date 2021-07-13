@@ -9,8 +9,6 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
     private final DatabaseStorage memoryStorage;
     private final DatabaseStorage diskStorage;
 
-
-
     public CachedDiskDatabaseStorage(int cacheSize, String pathToRecordsDirectory) {
         memoryStorage = new MemoryStorage(cacheSize);
         diskStorage = new DiskDatabaseStorage(pathToRecordsDirectory);

@@ -1,16 +1,16 @@
 package DB.Conditions;
 
 import DB.Attributes.Attribute;
-import DB.Record;
 import DB.Attributes.StudentAttributeFactory;
 import DB.Attributes.StudentAttributeType;
+import DB.Record;
 import DB.StudentRecord;
 
-public abstract class StudentComparisonCondition implements Condition {
+public abstract class SimpleCondition implements Condition {
     protected StudentAttributeType attributeType;
     protected Attribute attributeToBeComparedWith;
 
-    public StudentComparisonCondition(String attributeName, String attributeStrValue) {
+    public SimpleCondition(String attributeName, String attributeStrValue) {
         attributeType = StudentAttributeType.getTypeFromAttributeName(attributeName);
         attributeToBeComparedWith = StudentAttributeFactory.getByType(attributeType);
         attributeToBeComparedWith.setValue(attributeStrValue);

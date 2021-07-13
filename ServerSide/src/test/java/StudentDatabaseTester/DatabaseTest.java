@@ -2,9 +2,9 @@ package StudentDatabaseTester;
 
 import DB.Attributes.IntegerDatabaseKey;
 import DB.InvalidDatabaseOperationException;
-import DB.Record;
 import DB.Database;
 import DB.Attributes.StudentID;
+import DB.Record;
 import DB.StudentRecord;
 import org.junit.Before;
 import org.junit.Test;

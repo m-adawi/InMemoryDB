@@ -3,7 +3,7 @@ package DB.Conditions;
 import DB.Attributes.Attribute;
 import DB.Record;
 
-public class GreaterThanAttributeCondition extends StudentComparisonCondition {
+public class GreaterThanAttributeCondition extends SimpleCondition {
     public GreaterThanAttributeCondition(String attributeName, String attributeStrValue) {
         super(attributeName, attributeStrValue);
     }

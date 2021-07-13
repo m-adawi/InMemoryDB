@@ -1,5 +1,7 @@
 package DB.Commands;
 
+import DB.Conditions.Condition;
+import DB.Conditions.ConditionFactory;
 import org.gibello.zql.ZDelete;
 import org.gibello.zql.ZStatement;
 
@@ -14,11 +16,17 @@ public class DeleteCommandGenerator extends SpecializedConditionalCommandGenerat
     public Command generateCommand() {
         checkTableName(query.getTable());
         if(isOnSingleRecord(query.getWhere()))
-            return generateDeleteSingleRecordCommand(query);
-        return null;
+            return generateDeleteSingleRecordCommand();
+        else
+            return generateDeleteOnCondition();
     }
 
-    private Command generateDeleteSingleRecordCommand(ZDelete query) {
-        return new DeleteSingleRecordCommand(getSingleRecordKey(query.getWhere()));
+    private Command generateDeleteSingleRecordCommand() {
+        return new DeleteCommand(getSingleRecordKey(query.getWhere()));
+    }
+
+    private Command generateDeleteOnCondition(){
+        Condition condition = ConditionFactory.getInstance().getByZExp(query.getWhere());
+        return new DeleteCommand(condition);
     }
 }
