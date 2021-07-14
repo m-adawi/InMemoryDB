@@ -4,7 +4,7 @@ import DB.InvalidDatabaseOperationException;
 
 import java.util.Objects;
 
-public abstract class DoubleAttribute implements Attribute, Cloneable {
+public abstract class DoubleAttribute implements Attribute {
     protected Double value;
 
     public DoubleAttribute() {
@@ -17,6 +17,10 @@ public abstract class DoubleAttribute implements Attribute, Cloneable {
 
     public DoubleAttribute(String strVal) {
         setValue(strVal);
+    }
+
+    public DoubleAttribute(DoubleAttribute anotherDoubleAttribute) {
+        value = anotherDoubleAttribute.getValue();
     }
 
     public double getValue() {

@@ -10,6 +10,10 @@ public class Faculty extends StringAttribute {
         super(value);
     }
 
+    public Faculty(StringAttribute anotherStringAttribute) {
+        super(anotherStringAttribute);
+    }
+
     @Override
     protected int maximumLength() {
         return MAX_STRING_LENGTH;

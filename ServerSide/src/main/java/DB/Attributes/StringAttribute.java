@@ -15,6 +15,10 @@ public abstract class StringAttribute implements Attribute {
         setValue(value);
     }
 
+    public StringAttribute(StringAttribute anotherStringAttribute) {
+        setValue(anotherStringAttribute.value);
+    }
+
     @Override
     public  void setValue(String strVal) {
         if(strVal.length() > maximumLength())

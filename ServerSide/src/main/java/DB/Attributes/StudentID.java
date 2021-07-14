@@ -1,7 +1,5 @@
 package DB.Attributes;
 
-import DB.DatabaseKey;
-
 public class StudentID extends IntegerAttribute {
 
     public StudentID() {
@@ -15,8 +13,8 @@ public class StudentID extends IntegerAttribute {
         super(strVal);
     }
 
-    public StudentID(DatabaseKey recordKey) {
-        value = recordKey.hashCode();
+    public StudentID(IntegerAttribute anotherIntegerAttribute) {
+        super(anotherIntegerAttribute);
     }
 
     @Override

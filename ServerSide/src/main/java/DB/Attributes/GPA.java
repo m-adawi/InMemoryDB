@@ -14,10 +14,12 @@ public class GPA extends DoubleAttribute {
         super(strVal);
     }
 
+    public GPA(DoubleAttribute anotherDoubleAttribute) {
+        super(anotherDoubleAttribute);
+    }
+
     @Override
     public String getStrValue() {
-        if(value == 0)
-            return "Not assigned";
         // return the string in the format x.xx
         return String.format("%1.2f", value);
     }

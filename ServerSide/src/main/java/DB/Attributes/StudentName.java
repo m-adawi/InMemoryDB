@@ -10,6 +10,10 @@ public class StudentName extends StringAttribute {
         super(value);
     }
 
+    public StudentName(StringAttribute anotherStringAttribute) {
+        super(anotherStringAttribute);
+    }
+
     @Override
     protected int maximumLength() {
         return MAX_STRING_LENGTH;

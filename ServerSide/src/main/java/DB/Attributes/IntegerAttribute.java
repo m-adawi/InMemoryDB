@@ -19,6 +19,10 @@ public abstract class IntegerAttribute implements Attribute {
         setValue(strVal);
     }
 
+    public IntegerAttribute(IntegerAttribute anotherIntegerAttribute) {
+        value = anotherIntegerAttribute.getValue();
+    }
+
     public int getValue() {
         return value;
     }
