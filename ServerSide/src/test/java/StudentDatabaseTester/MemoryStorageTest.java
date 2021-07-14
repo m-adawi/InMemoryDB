@@ -4,7 +4,6 @@ import DB.Record;
 import DB.Storages.RecordNotFoundException;
 import DB.Storages.MemoryStorage;
 import DB.Attributes.StudentID;
-import DB.StudentRecord;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,15 +20,15 @@ public class MemoryStorageTest extends DatabaseStorageTest {
 
     @Test(expected = RecordNotFoundException.class)
     public void testCacheMissForNonExistentRecord() throws RecordNotFoundException {
-        Record record = new StudentRecord(new StudentID(1) );
+        Record record = new Record(new StudentID(1) );
         storage.read(record.getKey());
     }
 
     @Test(expected = RecordNotFoundException.class)
     public void testCacheMissForRecordsWithSameCacheKey() throws RecordNotFoundException {
         int id = 1;
-        Record record = new StudentRecord(new StudentID(id));
-        Record record2 = new StudentRecord(new StudentID(cacheSize + id));
+        Record record = new Record(new StudentID(id));
+        Record record2 = new Record(new StudentID(cacheSize + id));
         storage.write(record);
         storage.write(record2);
         assertFalse(storage.containsKey(record.getKey()));

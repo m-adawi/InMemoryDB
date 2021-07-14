@@ -4,7 +4,6 @@ import DB.Record;
 import DB.Storages.DatabaseStorage;
 import DB.Storages.RecordNotFoundException;
 import DB.Attributes.StudentID;
-import DB.StudentRecord;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,8 +37,8 @@ public abstract class DatabaseStorageTest {
         assertFalse(storage.containsKey(record.getKey()));
     }
 
-    protected StudentRecord getNewRecordWithID(int ID){
-        return new StudentRecord(new StudentID(ID));
+    protected Record getNewRecordWithID(int ID){
+        return new Record(new StudentID(ID));
     }
 
 }

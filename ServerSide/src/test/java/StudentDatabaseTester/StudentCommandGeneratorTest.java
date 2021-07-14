@@ -5,7 +5,6 @@ import DB.Commands.CommandsGenerator;
 import DB.Commands.InsertRecordCommand;
 import DB.Attributes.StudentID;
 import DB.Record;
-import DB.StudentRecord;
 import org.gibello.zql.ParseException;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class StudentCommandGeneratorTest {
         String sqlQuery = "insert into students (ID, Name, Faculty) values (12, malek, Engineering);";
         Command command = commandsGenerator.generateFromSqlQuery(sqlQuery);
         assertTrue(command instanceof InsertRecordCommand);
-        Record record = new StudentRecord(new StudentID(12));
+        Record record = new Record(new StudentID(12));
         record.setAttributeFromNameAndStrValue("name", "malek");
         record.setAttributeFromNameAndStrValue("faculty", "engineering");
         assertTrue(record.equals(((InsertRecordCommand) command).getRecord()));

@@ -4,7 +4,6 @@ import DB.Attributes.Attribute;
 import DB.Attributes.StudentAttributeFactory;
 import DB.Attributes.StudentAttributeType;
 import DB.Record;
-import DB.StudentRecord;
 
 public abstract class SimpleCondition implements Condition {
     protected StudentAttributeType attributeType;
@@ -17,6 +16,6 @@ public abstract class SimpleCondition implements Condition {
     }
 
     protected Attribute getRecordAttribute(Record record) {
-        return ((StudentRecord) record).getAttributeFromItsType(attributeType);
+        return record.getAttributeFromItsType(attributeType);
     }
 }

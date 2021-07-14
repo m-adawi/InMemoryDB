@@ -4,7 +4,6 @@ import DB.InvalidDatabaseOperationException;
 import DB.Attributes.StudentAttributeType;
 import DB.Attributes.StudentID;
 import DB.Record;
-import DB.StudentRecord;
 import org.gibello.zql.ZInsert;
 import org.gibello.zql.ZStatement;
 
@@ -29,7 +28,7 @@ public class InsertCommandGenerator extends SpecializedCommandGenerator {
     }
 
     private Record generateRecordForAllAttributes(Vector values){
-        StudentRecord record = new StudentRecord(new StudentID(values.elementAt(0).toString()));
+        Record record = new Record(new StudentID(values.elementAt(0).toString()));
         StudentAttributeType[] attributeTypes = StudentAttributeType.values();
         if(values.size() != attributeTypes.length)
             throwColumnsAndValuesMismatchException(attributeTypes.length, values.size());
@@ -51,7 +50,7 @@ public class InsertCommandGenerator extends SpecializedCommandGenerator {
         if(indexOfID == -1){
             throw new InvalidDatabaseOperationException("You must provide " + StudentAttributeType.ID);
         }
-        Record record = new StudentRecord(new StudentID(values.elementAt(indexOfID).toString()));
+        Record record = new Record(new StudentID(values.elementAt(indexOfID).toString()));
         for(int i = 0; i < columns.size(); i++){
             if(i == indexOfID)
                 continue;

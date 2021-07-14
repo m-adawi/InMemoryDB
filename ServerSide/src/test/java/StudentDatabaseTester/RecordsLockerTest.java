@@ -4,7 +4,6 @@ import DB.DatabaseKey;
 import DB.Record;
 import DB.RecordsLocker;
 import DB.Attributes.StudentID;
-import DB.StudentRecord;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ public class RecordsLockerTest {
 
     @Test
     public void testLockingTwice() {
-        Record record = new StudentRecord(new StudentID(1));
+        Record record = new Record(new StudentID(1));
         locker.lock(record.getKey());
         locker.lock(record.getKey());
         System.out.println("finished");
@@ -21,7 +20,7 @@ public class RecordsLockerTest {
 
     @Ignore
     public void testMultipleThreadsLock() throws Exception {
-        Record record = new StudentRecord(new StudentID(1));
+        Record record = new Record(new StudentID(1));
         Runnable task1 = new LockerTester(locker, 100, record.getKey());
         Runnable task2 = new LockerTester(locker, 50, record.getKey());
 

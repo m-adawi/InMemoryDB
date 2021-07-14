@@ -5,7 +5,6 @@ import DB.InvalidDatabaseOperationException;
 import DB.Database;
 import DB.Attributes.StudentID;
 import DB.Record;
-import DB.StudentRecord;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +20,7 @@ public class DatabaseTest {
 
     @Test
     public void testInsertionAndSelection(){
-        Record record = new StudentRecord(new StudentID(1));
+        Record record = new Record(new StudentID(1));
         database.insertRecord(record);
         Record record2 = database.selectRecordByKey(record.getKey());
         assertEquals(record, record2);
