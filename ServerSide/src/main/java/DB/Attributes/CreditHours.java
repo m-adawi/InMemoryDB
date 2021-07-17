@@ -12,8 +12,4 @@ public class CreditHours extends IntegerAttribute {
     public CreditHours(String strVal) {
         super(strVal);
     }
-
-    public CreditHours(IntegerAttribute anotherIntegerAttribute) {
-        super(anotherIntegerAttribute);
-    }
 }

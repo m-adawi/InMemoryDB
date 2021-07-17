@@ -1,5 +1,7 @@
 package DB.Commands;
 
+import DB.Conditions.Condition;
+import DB.Conditions.ConditionFactory;
 import DB.DatabaseKey;
 import DB.Attributes.IntegerDatabaseKey;
 import DB.Attributes.StudentAttributeType;
@@ -28,5 +30,9 @@ public abstract class SpecializedConditionalCommandGenerator extends Specialized
         String idStrVal = ((ZExpression) exp).getOperands().elementAt(1).toString();
         StudentID id = new StudentID(idStrVal);
         return new IntegerDatabaseKey(id.getValue());
+    }
+
+    protected Condition getCondition(ZExp exp) {
+        return ConditionFactory.getInstance().getByZExp(exp);
     }
 }

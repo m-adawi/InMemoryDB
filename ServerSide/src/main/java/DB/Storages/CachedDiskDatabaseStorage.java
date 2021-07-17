@@ -15,7 +15,7 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
     }
 
     @Override
-    public void write(Record record) throws InvalidDatabaseOperationException {
+    public void write(Record record) {
         writeToCache(record);
         writeToDisk(record);
     }
@@ -35,7 +35,7 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
             record = memoryStorage.read(recordKey);
         } catch (RecordNotFoundException e){ // Cache miss
             record = diskStorage.read(recordKey);
-            // Write most recent accessed records to cache
+            // Write most recently accessed records to cache
             memoryStorage.write(record);
         }
         return record;

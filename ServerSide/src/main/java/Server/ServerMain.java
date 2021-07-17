@@ -2,6 +2,8 @@ package Server;
 
 
 import Communication.Connection;
+import DB.Attributes.IntegerDatabaseKey;
+import DB.Commands.UpdateCommand;
 
 import java.io.IOException;
 

@@ -15,15 +15,16 @@ public abstract class StringAttribute implements Attribute {
         setValue(value);
     }
 
-    public StringAttribute(StringAttribute anotherStringAttribute) {
-        setValue(anotherStringAttribute.value);
-    }
-
     @Override
     public  void setValue(String strVal) {
         if(strVal.length() > maximumLength())
             throw new InvalidDatabaseOperationException("Above the maximum " + maximumLength() + " characters allowed length");
         value = strVal;
+    }
+
+    @Override
+    public void setValue(Attribute anotherAttribute) {
+        setValue(anotherAttribute.getStrValue());
     }
 
     @Override

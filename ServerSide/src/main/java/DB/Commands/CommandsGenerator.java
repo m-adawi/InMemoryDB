@@ -24,6 +24,8 @@ public class CommandsGenerator {
             commandGenerator = new InsertCommandGenerator(statement);
         else if(statement instanceof ZDelete)
             commandGenerator = new DeleteCommandGenerator(statement);
+        else if(statement instanceof ZUpdate)
+            commandGenerator = new UpdateCommandGenerator(statement);
         else
             throw new UnsupportedSQLStatementException();
         return commandGenerator.generateCommand();

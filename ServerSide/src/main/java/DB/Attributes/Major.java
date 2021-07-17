@@ -10,10 +10,6 @@ public class Major extends StringAttribute {
         super(value);
     }
 
-    public Major(StringAttribute anotherStringAttribute) {
-        super(anotherStringAttribute);
-    }
-
     @Override
     protected int maximumLength() {
         return MAX_STRING_LENGTH;

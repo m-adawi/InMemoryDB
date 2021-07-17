@@ -9,6 +9,11 @@ public class NullAttribute implements Attribute {
     }
 
     @Override
+    public void setValue(Attribute anotherAttribute) {
+        setValue(anotherAttribute.getStrValue());
+    }
+
+    @Override
     public String getStrValue() {
         return errorMessage;
     }

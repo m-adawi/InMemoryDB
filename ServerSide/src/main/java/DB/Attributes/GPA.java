@@ -14,10 +14,6 @@ public class GPA extends DoubleAttribute {
         super(strVal);
     }
 
-    public GPA(DoubleAttribute anotherDoubleAttribute) {
-        super(anotherDoubleAttribute);
-    }
-
     @Override
     public String getStrValue() {
         // return the string in the format x.xx

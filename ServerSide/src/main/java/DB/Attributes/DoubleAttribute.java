@@ -19,16 +19,17 @@ public abstract class DoubleAttribute implements Attribute {
         setValue(strVal);
     }
 
-    public DoubleAttribute(DoubleAttribute anotherDoubleAttribute) {
-        value = anotherDoubleAttribute.getValue();
-    }
-
     public double getValue() {
         return value;
     }
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    @Override
+    public void setValue(Attribute anotherAttribute) {
+        setValue(((DoubleAttribute) anotherAttribute).getValue());
     }
 
     @Override
