@@ -7,7 +7,6 @@ public enum StudentAttributeType {
 
     public static StudentAttributeType getTypeFromAttributeName(String attributeName) {
         StudentAttributeType type;
-
         try {
             // Ignore case
             type = StudentAttributeType.valueOf(attributeName.toUpperCase());
@@ -15,7 +14,6 @@ public enum StudentAttributeType {
         catch (IllegalArgumentException e){
             throw new InvalidDatabaseOperationException("Invalid attribute name: " + attributeName);
         }
-
         return type;
     }
 }

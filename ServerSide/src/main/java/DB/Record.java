@@ -26,7 +26,7 @@ public class Record implements Serializable {
     }
 
     public void setAttributeFromTypeAndAnotherAttribute(StudentAttributeType attributeType, Attribute anotherAttribute) {
-        Attribute attributeToBeSet = map.get(attributeType);
+        Attribute attributeToBeSet = StudentAttributeFactory.getByType(attributeType);
         attributeToBeSet.setValue(anotherAttribute);
         map.put(attributeType, attributeToBeSet);
     }

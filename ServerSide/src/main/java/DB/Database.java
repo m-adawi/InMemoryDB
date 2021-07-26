@@ -65,7 +65,6 @@ public class Database {
         storage.deleteAllRecords();
     }
 
-    //TODO modify execute for conditions
     public String execute(Command command) {
         return command.execute();
     }

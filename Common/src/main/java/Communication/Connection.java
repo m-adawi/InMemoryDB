@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 
 public class Connection implements Closeable {
     private final static int INT_SIZE = 4;
+    //TODO use SSLSocket
     private final Socket socket;
     private final BufferedInputStream in;
     private final BufferedOutputStream out;

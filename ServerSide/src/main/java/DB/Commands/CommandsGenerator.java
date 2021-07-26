@@ -19,13 +19,14 @@ public class CommandsGenerator {
         ZqlParser parser = new ZqlParser(new ByteArrayInputStream(sqlQuery.getBytes()));
         ZStatement statement = parser.readStatement();
         SpecializedCommandGenerator commandGenerator;
-        // TODO complete it
         if(statement instanceof ZInsert)
             commandGenerator = new InsertCommandGenerator(statement);
         else if(statement instanceof ZDelete)
             commandGenerator = new DeleteCommandGenerator(statement);
         else if(statement instanceof ZUpdate)
             commandGenerator = new UpdateCommandGenerator(statement);
+        else if(statement instanceof ZQuery)
+            commandGenerator = new SelectCommandGenerator(statement);
         else
             throw new UnsupportedSQLStatementException();
         return commandGenerator.generateCommand();

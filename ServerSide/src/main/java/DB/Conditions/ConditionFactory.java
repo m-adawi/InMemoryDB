@@ -15,6 +15,8 @@ public class ConditionFactory {
     }
 
     public Condition getByZExp(ZExp exp) {
+        if(exp == null)
+            return new AlwaysTrueCondition();
         if(!(exp instanceof ZExpression))
             throw new UnsupportedSQLStatementException();
         return getByZExpression((ZExpression) exp);

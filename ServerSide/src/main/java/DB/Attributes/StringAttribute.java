@@ -19,7 +19,11 @@ public abstract class StringAttribute implements Attribute {
     public  void setValue(String strVal) {
         if(strVal.length() > maximumLength())
             throw new InvalidDatabaseOperationException("Above the maximum " + maximumLength() + " characters allowed length");
-        value = strVal;
+        // Extract string from between quotes
+        if(strVal.startsWith("\"") && strVal.endsWith("\"") || strVal.startsWith("'") && strVal.endsWith("'"))
+            value = strVal.substring(1, strVal.length()-1);
+        else
+            value = strVal;
     }
 
     @Override

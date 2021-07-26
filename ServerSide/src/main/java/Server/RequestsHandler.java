@@ -7,6 +7,7 @@ import DB.Commands.CommandsGenerator;
 import DB.Commands.UnsupportedSQLStatementException;
 import DB.Database;
 import org.gibello.zql.ParseException;
+import org.gibello.zql.TokenMgrError;
 
 import java.io.IOException;
 
@@ -56,7 +57,7 @@ public class RequestsHandler implements Runnable {
         return username.equals("malek") && password.equals("123");
     }
 
-    private void sendExceptionMessage(Exception e) throws IOException {
+    private void sendExceptionMessage(Throwable e) throws IOException {
         connection.send(e.getMessage());
     }
 
@@ -69,7 +70,7 @@ public class RequestsHandler implements Runnable {
             Command command = commandsGenerator.generateFromSqlQuery(sqlCommand);
             String result = database.execute(command);
             connection.send(result);
-        } catch (ParseException | InvalidDatabaseOperationException | UnsupportedSQLStatementException e) {
+        } catch (ParseException | TokenMgrError | InvalidDatabaseOperationException | UnsupportedSQLStatementException e) {
             sendExceptionMessage(e);
         }
     }
