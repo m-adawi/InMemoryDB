@@ -46,8 +46,18 @@ public class SelectCommand extends ConditionalCommand {
 
     @Override
     protected String executeOnListOfRecords(List<Record> recordList) {
+        appendColumnNames();
         String completionMessage =  super.executeOnListOfRecords(recordList);
         tableBuilder.append(completionMessage);
         return tableBuilder.toString();
+    }
+
+    private void appendColumnNames() {
+        tableBuilder.append('|');
+        for(StudentAttributeType type : attributesToBeSelected) {
+            tableBuilder.append(type.name());
+            tableBuilder.append('|');
+        }
+        tableBuilder.append('\n');
     }
 }

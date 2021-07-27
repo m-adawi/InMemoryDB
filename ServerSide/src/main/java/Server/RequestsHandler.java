@@ -53,7 +53,7 @@ public class RequestsHandler implements Runnable {
     }
 
     private boolean areValidCredentials(String username, String password) {
-        // TODO authentication
+        // TODO: authentication
         return username.equals("malek") && password.equals("123");
     }
 

@@ -67,7 +67,6 @@ public class Database {
         return storage.getKeysCollection();
     }
 
-    //TODO delete it
     public void deleteAllRecords() {
         storage.deleteAllRecords();
     }
