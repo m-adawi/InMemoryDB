@@ -35,9 +35,10 @@ public class UpdateCommand extends ConditionalCommand {
 
     @Override
     protected void executeOnRecord(Record record) {
+        DatabaseKey oldKey = record.getKey();
         for(int i = 0; i < numberOfAttributesToBeUpdated; i++) {
             record.setAttributeFromTypeAndAnotherAttribute(attributesToBeUpdated[i], attributeValues[i]);
         }
-        database.updateRecord(record);
+        database.updateRecordByKey(oldKey, record);
     }
 }

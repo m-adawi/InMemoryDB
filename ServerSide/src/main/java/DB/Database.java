@@ -46,10 +46,16 @@ public class Database {
         }
     }
 
-    public void updateRecord(Record record) {
-        if(!storage.containsKey(record.getKey()))
+    public void updateRecordByKey(DatabaseKey recordKey, Record record) {
+        if(!storage.containsKey(recordKey))
             throwRecordDoesNotExistException();
-        //TODO check changing id
+        // If the record key is to be updated, delete old record and write the new one
+        if(!record.getKey().equals(recordKey)) {
+            // If the new key already exists, raise exception
+            if(storage.containsKey(record.getKey()))
+                throwRecordAlreadyExistsException();
+            deleteRecordByKey(recordKey);
+        }
         storage.write(record);
     }
 

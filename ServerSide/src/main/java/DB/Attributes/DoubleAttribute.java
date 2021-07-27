@@ -38,7 +38,7 @@ public abstract class DoubleAttribute implements Attribute {
             value = Double.parseDouble(strVal);
         }
         catch (IllegalArgumentException e){
-            throw new InvalidDatabaseOperationException(value + " is not a double");
+            throw new InvalidDatabaseOperationException(strVal + " is not a double");
         }
     }
 

@@ -38,7 +38,7 @@ public abstract class IntegerAttribute implements Attribute {
             value = Integer.parseInt(strVal);
         }
         catch (IllegalArgumentException e){
-            throw new InvalidDatabaseOperationException(value + " is not an integer");
+            throw new InvalidDatabaseOperationException(strVal + " is not an integer");
         }
     }
 
