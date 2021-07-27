@@ -49,6 +49,7 @@ public class Database {
     public void updateRecord(Record record) {
         if(!storage.containsKey(record.getKey()))
             throwRecordDoesNotExistException();
+        //TODO check changing id
         storage.write(record);
     }
 

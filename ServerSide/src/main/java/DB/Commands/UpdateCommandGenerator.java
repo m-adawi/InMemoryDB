@@ -18,10 +18,7 @@ public class UpdateCommandGenerator extends SpecializedConditionalCommandGenerat
     public Command generateCommand() {
         checkTableName(query.getTable());
         prepareColumnsAndValues();
-        if(isOnSingleRecord(query.getWhere()))
-            return generateUpdateSingleRecordCommand();
-        else
-            return generateUpdateOnConditionCommand();
+        return generateUpdateOnConditionCommand();
     }
 
     private void prepareColumnsAndValues() {
@@ -32,11 +29,6 @@ public class UpdateCommandGenerator extends SpecializedConditionalCommandGenerat
             columns[i] = query.getColumnUpdateName(i+1); // Index starts from 1
             values[i] = query.getColumnUpdate(i+1).toString();
         }
-    }
-
-    private Command generateUpdateSingleRecordCommand() {
-        DatabaseKey recordKey = getSingleRecordKey(query.getWhere());
-        return new UpdateCommand(recordKey, columns, values);
     }
 
     private Command generateUpdateOnConditionCommand() {

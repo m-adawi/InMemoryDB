@@ -17,15 +17,7 @@ public class DeleteCommandGenerator extends SpecializedConditionalCommandGenerat
     @Override
     public Command generateCommand() {
         checkTableName(query.getTable());
-        if(isOnSingleRecord(query.getWhere()))
-            return generateDeleteSingleRecordCommand();
-        else
-            return generateDeleteOnCondition();
-    }
-
-    private Command generateDeleteSingleRecordCommand() {
-        DatabaseKey recordKey = getSingleRecordKey(query.getWhere());
-        return new DeleteCommand(recordKey);
+        return generateDeleteOnCondition();
     }
 
     private Command generateDeleteOnCondition(){

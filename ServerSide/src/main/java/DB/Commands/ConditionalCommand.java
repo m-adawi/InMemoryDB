@@ -1,6 +1,7 @@
 package DB.Commands;
 
 import DB.Conditions.Condition;
+import DB.Conditions.IDEqualCondition;
 import DB.DatabaseKey;
 import DB.Record;
 import DB.RecordKeysCollection;
@@ -9,43 +10,41 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class ConditionalCommand extends Command {
-    protected final DatabaseKey recordKey;
     protected final Condition condition;
-
-    public ConditionalCommand(DatabaseKey recordKey) {
-        this.recordKey = recordKey;
-        condition = null;
-    }
 
     public ConditionalCommand(Condition condition) {
         this.condition = condition;
-        recordKey = null;
     }
 
     public boolean isOnSingleRecord() {
-        return recordKey != null;
-    }
-
-    public DatabaseKey getRecordKey() {
-        return recordKey;
+        return condition instanceof IDEqualCondition;
     }
 
     @Override
     public String execute() {
-        if(isOnSingleRecord()) {
-            executeOnRecord(recordKey);
-            return "Done";
-        }
-        else
-            return executeOnListOfRecords(getAllRecordsSatisfiedByCondition());
+        return executeOnListOfRecords(getAllRecordsSatisfiedByCondition());
     }
 
     protected abstract void executeOnRecord(DatabaseKey recordKey);
 
-    protected abstract String executeOnListOfRecords(List<Record> recordList);
+    protected abstract void executeOnRecord(Record record);
+
+    protected String executeOnListOfRecords(List<Record> recordList) {
+        for(Record record : recordList) {
+            executeOnRecord(record);
+        }
+        return "Done";
+    }
 
     protected List<Record> getAllRecordsSatisfiedByCondition() {
         List<Record> satisfied = new LinkedList<>();
+        // If the condition is IDEqualCondition return a list with that single record
+        if(isOnSingleRecord()){
+            DatabaseKey recordKey = ((IDEqualCondition) condition).getKey();
+            Record record = database.selectRecordByKey(recordKey);
+            satisfied.add(record);
+            return satisfied;
+        }
         RecordKeysCollection allKeys = database.getKeysCollection();
         for (DatabaseKey recordKey : allKeys) {
             Record record = database.selectRecordByKey(recordKey);

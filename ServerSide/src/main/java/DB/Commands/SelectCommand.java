@@ -11,11 +11,6 @@ public class SelectCommand extends ConditionalCommand {
     private StudentAttributeType[] attributesToBeSelected;
     StringBuilder tableBuilder = new StringBuilder();
 
-    public SelectCommand(DatabaseKey recordKey, String[] selectedColumns) {
-        super(recordKey);
-        setAttributesToBeSelected(selectedColumns);
-    }
-
     public SelectCommand(Condition condition, String[] selectedColumns) {
         super(condition);
         setAttributesToBeSelected(selectedColumns);
@@ -36,6 +31,11 @@ public class SelectCommand extends ConditionalCommand {
     @Override
     protected void executeOnRecord(DatabaseKey recordKey) {
         Record record = database.selectRecordByKey(recordKey);
+        executeOnRecord(record);
+    }
+
+    @Override
+    protected void executeOnRecord(Record record) {
         tableBuilder.append('|');
         for (StudentAttributeType attribute : attributesToBeSelected) {
             tableBuilder.append(record.getAttributeFromItsType(attribute).getStrValue());
@@ -44,12 +44,10 @@ public class SelectCommand extends ConditionalCommand {
         tableBuilder.append('\n');
     }
 
-
     @Override
     protected String executeOnListOfRecords(List<Record> recordList) {
-        for(Record record : recordList) {
-            executeOnRecord(record.getKey());
-        }
+        String completionMessage =  super.executeOnListOfRecords(recordList);
+        tableBuilder.append(completionMessage);
         return tableBuilder.toString();
     }
 }

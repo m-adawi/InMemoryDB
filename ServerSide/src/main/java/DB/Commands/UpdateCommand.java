@@ -5,17 +5,10 @@ import DB.Conditions.Condition;
 import DB.DatabaseKey;
 import DB.Record;
 
-import java.util.List;
-
 public class UpdateCommand extends ConditionalCommand {
     private StudentAttributeType[] attributesToBeUpdated;
     private Attribute[] attributeValues;
     private int numberOfAttributesToBeUpdated;
-
-    public UpdateCommand(DatabaseKey recordKey, String[] attributeNames, String[] attributeStrValues) {
-        super(recordKey);
-        setAttributes(attributeNames, attributeStrValues);
-    }
 
     public UpdateCommand(Condition condition, String[] attributeName, String[] attributeStrValues) {
         super(condition);
@@ -37,17 +30,14 @@ public class UpdateCommand extends ConditionalCommand {
     @Override
     protected void executeOnRecord(DatabaseKey recordKey) {
         Record record = database.selectRecordByKey(recordKey);
+        executeOnRecord(record);
+    }
+
+    @Override
+    protected void executeOnRecord(Record record) {
         for(int i = 0; i < numberOfAttributesToBeUpdated; i++) {
             record.setAttributeFromTypeAndAnotherAttribute(attributesToBeUpdated[i], attributeValues[i]);
         }
         database.updateRecord(record);
-    }
-
-    @Override
-    protected String executeOnListOfRecords(List<Record> recordList) {
-        for(Record record : recordList) {
-            executeOnRecord(record.getKey());
-        }
-        return "Done";
     }
 }

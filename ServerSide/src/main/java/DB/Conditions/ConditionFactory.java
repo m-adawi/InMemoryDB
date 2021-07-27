@@ -1,8 +1,13 @@
 package DB.Conditions;
 
+import DB.Attributes.IntegerDatabaseKey;
+import DB.Attributes.StudentAttributeType;
+import DB.Attributes.StudentID;
 import DB.Commands.UnsupportedSQLStatementException;
 import org.gibello.zql.ZExp;
 import org.gibello.zql.ZExpression;
+
+import javax.swing.*;
 
 public class ConditionFactory {
     private static final ConditionFactory factory = new ConditionFactory();
@@ -29,7 +34,11 @@ public class ConditionFactory {
 
         switch (operator){
             case "=":
-                return new EqualAttributeCondition(operand1, operand2);
+                // If the id = something, generate IDEqualCommand
+                if(operand1.equalsIgnoreCase(StudentAttributeType.ID.name()))
+                    return new IDEqualCondition(new IntegerDatabaseKey(new StudentID(operand2)));
+                else
+                    return new EqualAttributeCondition(operand1, operand2);
             case "!=":
                 return new InvertedCondition(new EqualAttributeCondition(operand1, operand2));
             case "<":
