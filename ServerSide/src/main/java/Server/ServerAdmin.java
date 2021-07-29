@@ -1,11 +1,13 @@
 package Server;
 
+import Common.UserInput;
+
 import java.util.Scanner;
 import java.util.Set;
 
 public class ServerAdmin {
     private static final Authenticator authenticator = new Authenticator(ServerConfigurations.getConfigurations().getUsersDirectory());
-    private static final Scanner in = new Scanner(System.in);
+    private static final UserInput in = new UserInput();
 
     private enum Action {
         add("Add a new user"),
@@ -27,8 +29,7 @@ public class ServerAdmin {
     public static void main(String[] args) {
         printPrompt();
         while(true) {
-            System.out.print(">>> ");
-            String actionString = in.nextLine().trim();
+            String actionString = in.prompt();
             try {
                 Action action = Action.valueOf(actionString);
                 performAction(action);
@@ -64,16 +65,13 @@ public class ServerAdmin {
     }
 
     private static void addUser() {
-        System.out.println("Enter a new username: ");
-        String username = in.nextLine().trim();
-        System.out.println("Enter a password: ");
-        String password = in.nextLine().trim();
+        String username = in.prompt("Enter a new username:");
+        String password = in.prompt("Enter a password:");
         authenticator.addUser(username, password);
     }
 
     private static void removeUser() {
-        System.out.println("Enter the username of the user to be deleted: ");
-        String username = in.nextLine().trim();
+        String username = in.prompt("Enter the username of the user to be deleted:");
         authenticator.deleteUser(username);
     }
 
