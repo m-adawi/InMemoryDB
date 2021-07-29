@@ -2,9 +2,9 @@ package Server;
 
 public class ServerConfigurations {
     private static final ServerConfigurations configurations = new ServerConfigurations();
-    private int cacheSize;
-    private int serverPort;
-    // private Database defaultDatabase = Database.getDatabase();
+    private final int cacheSize;
+    private final int serverPort;
+    private static final Authenticator authenticator = new Authenticator("users");
 
     private ServerConfigurations(){
         cacheSize = 100;
@@ -22,8 +22,8 @@ public class ServerConfigurations {
     public int getServerPort(){
         return serverPort;
     }
-/*
-    public Database getDefaultDatabase() {
-        return defaultDatabase;
-    }*/
+
+    public Authenticator getAuthenticator() {
+        return authenticator;
+    }
 }

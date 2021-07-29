@@ -9,7 +9,7 @@ import java.io.*;
 public class DiskDatabaseStorage implements DatabaseStorage {
     private final File recordsDirectory;
     private final RecordsLocker recordsLocker = new RecordsLocker();
-    private final RecordKeysCollection keysCollection= new RecordKeysCollection();
+    private final RecordKeysCollection keysCollection = new RecordKeysCollection();
 
     public DiskDatabaseStorage(String pathToRecordsDirectory) {
         recordsDirectory = new File(pathToRecordsDirectory);

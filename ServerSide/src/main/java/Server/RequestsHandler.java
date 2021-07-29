@@ -15,6 +15,7 @@ public class RequestsHandler implements Runnable {
     private final static ServerConfigurations conf = ServerConfigurations.getConfigurations();
     private final static Database database = Database.getDatabase();
     private final static CommandsGenerator commandsGenerator = CommandsGenerator.getCommandGenerator();
+    private final static Authenticator authenticator = conf.getAuthenticator();
 
     private final Connection connection;
 
@@ -53,8 +54,7 @@ public class RequestsHandler implements Runnable {
     }
 
     private boolean areValidCredentials(String username, String password) {
-        // TODO: authentication
-        return username.equals("malek") && password.equals("123");
+        return authenticator.areValidCredentials(username, password);
     }
 
     private void sendExceptionMessage(Throwable e) throws IOException {
