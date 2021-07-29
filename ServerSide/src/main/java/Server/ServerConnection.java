@@ -1,6 +1,6 @@
 package Server;
 
-import Communication.Connection;
+import Common.Connection;
 
 import java.io.IOException;
 import java.net.ServerSocket;

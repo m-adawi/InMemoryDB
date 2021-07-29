@@ -1,12 +1,11 @@
 package Client;
 
-import Communication.Connection;
+import Common.Connection;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class ClientMain {
-    private static Connection connection;
 
     public static void main(String[] args) throws IOException {
         if(args.length != 2){
@@ -18,6 +17,7 @@ public class ClientMain {
         Scanner in = new Scanner(System.in);
         //TODO enhance
         String response;
+        Connection connection;
         do {
             connection = Connection.connectTo(address, port);
             System.out.println("Enter user name");

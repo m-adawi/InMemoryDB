@@ -1,17 +1,16 @@
 package Server;
 
 
-import Communication.Connection;
-import DB.Attributes.IntegerDatabaseKey;
-import DB.Commands.UpdateCommand;
+import Common.Connection;
 
 import java.io.IOException;
 
 public class ServerMain {
+    private final static int PORT = ServerConfigurations.getConfigurations().getServerPort();
+
     public static void main(String[] args) throws IOException {
-        ServerConnection serverConnection = new ServerConnection(ServerConfigurations.getConfigurations().getServerPort());
         while (true) {
-            try {
+            try (ServerConnection serverConnection = new ServerConnection(PORT)) {
                 Connection connection = serverConnection.acceptNewConnection();
                 Thread newTask = new Thread(new RequestsHandler(connection));
                 newTask.start();

@@ -1,6 +1,6 @@
 package Server;
 
-import Communication.Connection;
+import Common.Connection;
 import DB.InvalidDatabaseOperationException;
 import DB.Commands.Command;
 import DB.Commands.CommandsGenerator;

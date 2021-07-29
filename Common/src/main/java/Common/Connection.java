@@ -1,4 +1,4 @@
-package Communication;
+package Common;
 
 import java.io.*;
 import java.net.Socket;
