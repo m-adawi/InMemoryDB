@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class ServerAdmin {
-    private static final Authenticator authenticator = new Authenticator("users");
+    private static final Authenticator authenticator = new Authenticator(ServerConfigurations.getConfigurations().getUsersDirectory());
     private static final Scanner in = new Scanner(System.in);
 
     private enum Action {

@@ -15,7 +15,7 @@ public class RequestsHandler implements Runnable {
     private final static ServerConfigurations conf = ServerConfigurations.getConfigurations();
     private final static Database database = Database.getDatabase();
     private final static CommandsGenerator commandsGenerator = CommandsGenerator.getCommandGenerator();
-    private final static Authenticator authenticator = conf.getAuthenticator();
+    private final static Authenticator authenticator = new Authenticator(conf.getUsersDirectory());
 
     private final Connection connection;
 

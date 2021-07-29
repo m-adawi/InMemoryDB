@@ -15,7 +15,8 @@ public class Database {
     }
 
     private Database(){
-        storage = new CachedDiskDatabaseStorage(ServerConfigurations.getConfigurations().getCacheSize(), "Records");
+        ServerConfigurations conf = ServerConfigurations.getConfigurations();
+        storage = new CachedDiskDatabaseStorage(conf.getCacheSize(), conf.getRecordsDirectory());
     }
 
     public void insertRecord(Record record) {
