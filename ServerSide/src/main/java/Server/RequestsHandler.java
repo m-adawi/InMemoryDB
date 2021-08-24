@@ -1,11 +1,11 @@
 package Server;
 
 import Common.Connection;
-import DB.InvalidDatabaseOperationException;
 import DB.Commands.Command;
 import DB.Commands.CommandsGenerator;
 import DB.Commands.UnsupportedSQLStatementException;
 import DB.Database;
+import DB.InvalidDatabaseOperationException;
 import org.gibello.zql.ParseException;
 import org.gibello.zql.TokenMgrError;
 

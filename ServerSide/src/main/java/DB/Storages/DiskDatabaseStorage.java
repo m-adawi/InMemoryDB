@@ -25,15 +25,19 @@ public class DiskDatabaseStorage implements DatabaseStorage {
     }
 
     private void initializeKeysCollection() {
-        File[] recordFiles = recordsDirectory.listFiles();
-        if(recordFiles == null)
+        File[] firstSubDirs = recordsDirectory.listFiles();
+        if(firstSubDirs == null)
             return;
-        for(File recordFile : recordFiles){
-            IntegerDatabaseKey databaseKey = new IntegerDatabaseKey(Integer.parseInt(recordFile.getName(), 16));
-            keysCollection.addKey(databaseKey);
+        for(File secondSubDir : firstSubDirs){
+            File[] recordFiles = secondSubDir.listFiles();
+            for(File recordFile : recordFiles) {
+                IntegerDatabaseKey databaseKey = new IntegerDatabaseKey(Integer.parseInt(recordFile.getName(), 16));
+                keysCollection.addKey(databaseKey);
+            }
         }
     }
 
+    //TODO: add a write method with multiple records to lock them all first and modify delete and update commands
     @Override
     public void write(Record record) {
         recordsLocker.lock(record.getKey());
@@ -86,7 +90,13 @@ public class DiskDatabaseStorage implements DatabaseStorage {
 
     private File getRecordFileFromItsKey(DatabaseKey databaseKey){
         String recordFileName = getRecordFileNameFromItsKey(databaseKey);
-        return new File(recordsDirectory, recordFileName);
+        File firstSubDir = new File(recordsDirectory, getNthByteInHexadecimal(databaseKey.hashCode(), 0));
+        if(!firstSubDir.exists())
+            firstSubDir.mkdir();
+        File secondSubDir = new File(firstSubDir, getNthByteInHexadecimal(databaseKey.hashCode(), 1));
+        if(!secondSubDir.exists())
+            secondSubDir.mkdir();
+        return new File(secondSubDir, recordFileName);
     }
 
     private String getRecordFileNameFromItsKey(DatabaseKey databaseKey){
@@ -94,17 +104,17 @@ public class DiskDatabaseStorage implements DatabaseStorage {
         return String.format("%08X", databaseKey.hashCode());
     }
 
+    private String getNthByteInHexadecimal(int key, int n) {
+        return String.format("%02X", (key >> (n*8))&0xff);
+    }
+
     public void deleteAllRecords() {
-        File[] recordFiles = recordsDirectory.listFiles();
-        if(recordFiles == null)
-            return;
-        for(File recordFile : recordFiles){
-            boolean deleted = recordFile.delete();
-            if(!deleted) {
-                RuntimeException e = new UnknownErrorException("Could not delete " + recordFile);
-                ServerLogger.log(e);
-                throw e;
+        try {
+            for (DatabaseKey recordKey : keysCollection) {
+                delete(recordKey);
             }
+        }catch (RecordNotFoundException e) {
+            ServerLogger.log(e);
         }
         keysCollection.removeAllKeys();
     }
