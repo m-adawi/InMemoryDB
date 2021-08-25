@@ -1,4 +1,4 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
 public class UnsupportedSQLStatementException extends RuntimeException {
     public UnsupportedSQLStatementException() {

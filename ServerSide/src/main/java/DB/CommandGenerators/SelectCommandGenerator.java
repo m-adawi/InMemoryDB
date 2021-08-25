@@ -1,8 +1,8 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
+import DB.Commands.Command;
+import DB.Commands.SelectCommand;
 import DB.Conditions.Condition;
-import DB.Database;
-import DB.DatabaseKey;
 import org.gibello.zql.ZFromItem;
 import org.gibello.zql.ZQuery;
 import org.gibello.zql.ZSelectItem;

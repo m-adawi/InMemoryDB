@@ -3,11 +3,9 @@ package DB.Conditions;
 import DB.Attributes.IntegerDatabaseKey;
 import DB.Attributes.StudentAttributeType;
 import DB.Attributes.StudentID;
-import DB.Commands.UnsupportedSQLStatementException;
+import DB.CommandGenerators.UnsupportedSQLStatementException;
 import org.gibello.zql.ZExp;
 import org.gibello.zql.ZExpression;
-
-import javax.swing.*;
 
 public class ConditionFactory {
     private static final ConditionFactory factory = new ConditionFactory();

@@ -1,9 +1,8 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
+import DB.Commands.Command;
+import DB.Commands.DeleteCommand;
 import DB.Conditions.Condition;
-import DB.Conditions.ConditionFactory;
-import DB.Database;
-import DB.DatabaseKey;
 import org.gibello.zql.ZDelete;
 import org.gibello.zql.ZStatement;
 

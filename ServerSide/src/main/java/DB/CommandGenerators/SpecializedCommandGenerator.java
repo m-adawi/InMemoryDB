@@ -1,5 +1,6 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
+import DB.Commands.Command;
 import DB.InvalidDatabaseOperationException;
 
 public abstract class SpecializedCommandGenerator {

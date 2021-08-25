@@ -1,7 +1,9 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
+import DB.CommandGenerators.SpecializedConditionalCommandGenerator;
+import DB.Commands.Command;
+import DB.Commands.UpdateCommand;
 import DB.Conditions.Condition;
-import DB.DatabaseKey;
 import org.gibello.zql.ZStatement;
 import org.gibello.zql.ZUpdate;
 

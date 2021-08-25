@@ -1,5 +1,7 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
+import DB.Commands.Command;
+import DB.Commands.InsertRecordCommand;
 import DB.InvalidDatabaseOperationException;
 import DB.Attributes.StudentAttributeType;
 import DB.Attributes.StudentID;

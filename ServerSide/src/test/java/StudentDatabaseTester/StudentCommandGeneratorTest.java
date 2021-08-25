@@ -1,7 +1,7 @@
 package StudentDatabaseTester;
 
 import DB.Commands.Command;
-import DB.Commands.CommandsGenerator;
+import DB.CommandGenerators.CommandsGenerator;
 import DB.Commands.InsertRecordCommand;
 import DB.Attributes.StudentID;
 import DB.Record;

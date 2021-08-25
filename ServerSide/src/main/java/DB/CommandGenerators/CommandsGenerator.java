@@ -1,5 +1,6 @@
-package DB.Commands;
+package DB.CommandGenerators;
 
+import DB.Commands.*;
 import org.gibello.zql.*;
 
 import java.io.ByteArrayInputStream;
