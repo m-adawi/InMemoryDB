@@ -8,7 +8,6 @@ import java.io.*;
 
 public class DiskDatabaseStorage implements DatabaseStorage {
     private final File recordsDirectory;
-    private final RecordsLocker recordsLocker = new RecordsLocker();
     private final RecordKeysCollection keysCollection = new RecordKeysCollection();
 
     public DiskDatabaseStorage(String pathToRecordsDirectory) {
@@ -40,15 +39,12 @@ public class DiskDatabaseStorage implements DatabaseStorage {
     //TODO: add a write method with multiple records to lock them all first and modify delete and update commands
     @Override
     public void write(Record record) {
-        recordsLocker.lock(record.getKey());
         File recordFile = getRecordFileFromItsKey(record.getKey());
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(recordFile))) {
             outputStream.writeObject(record);
             keysCollection.addKey(record.getKey());
         } catch (IOException e){
             ServerLogger.log(e);
-        } finally {
-            recordsLocker.unlock(record.getKey());
         }
     }
 
@@ -56,15 +52,12 @@ public class DiskDatabaseStorage implements DatabaseStorage {
     public Record read(DatabaseKey recordKey) throws RecordNotFoundException {
         if(!keysCollection.containsKey(recordKey))
             throw new RecordNotFoundException();
-        recordsLocker.lock(recordKey);
         File recordFile = getRecordFileFromItsKey(recordKey);
         Record record = null;
         try(ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(recordFile))) {
             record = (Record) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e){
             ServerLogger.log(e);
-        } finally {
-            recordsLocker.unlock(recordKey);
         }
         return record;
     }
@@ -73,14 +66,9 @@ public class DiskDatabaseStorage implements DatabaseStorage {
     public void delete(DatabaseKey recordKey) throws RecordNotFoundException {
         if(!keysCollection.containsKey(recordKey))
             throw new RecordNotFoundException();
-        recordsLocker.lock(recordKey);
         File recordFile = getRecordFileFromItsKey(recordKey);
-        try {
-            recordFile.delete();
-            keysCollection.removeKey(recordKey);
-        } finally {
-            recordsLocker.unlock(recordKey);
-        }
+        recordFile.delete();
+        keysCollection.removeKey(recordKey);
     }
 
     @Override

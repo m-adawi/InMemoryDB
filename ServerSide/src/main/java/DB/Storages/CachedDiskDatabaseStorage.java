@@ -1,13 +1,11 @@
 package DB.Storages;
 
-import DB.DatabaseKey;
-import DB.InvalidDatabaseOperationException;
-import DB.Record;
-import DB.RecordKeysCollection;
+import DB.*;
 
 public class CachedDiskDatabaseStorage implements DatabaseStorage {
     private final DatabaseStorage memoryStorage;
     private final DatabaseStorage diskStorage;
+    private final RecordsLocker recordsLocker = new RecordsLocker();
 
     public CachedDiskDatabaseStorage(int cacheSize, String pathToRecordsDirectory) {
         memoryStorage = new MemoryStorage(cacheSize);
@@ -16,8 +14,14 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
 
     @Override
     public void write(Record record) {
-        writeToCache(record);
-        writeToDisk(record);
+        recordsLocker.lock(record.getKey());
+        try {
+            writeToCache(record);
+            writeToDisk(record);
+        } finally {
+            recordsLocker.unlock(record.getKey());
+        }
+
     }
 
     private void writeToCache(Record record){
@@ -30,6 +34,7 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
 
     @Override
     public Record read(DatabaseKey recordKey) throws RecordNotFoundException {
+        recordsLocker.lock(recordKey);
         Record record;
         try {
             record = memoryStorage.read(recordKey);
@@ -37,16 +42,21 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
             record = diskStorage.read(recordKey);
             // Write most recently accessed records to cache
             memoryStorage.write(record);
+        } finally {
+            recordsLocker.unlock(recordKey);
         }
         return record;
     }
 
     @Override
     public void delete(DatabaseKey recordKey) throws RecordNotFoundException{
+        recordsLocker.lock(recordKey);
         try {
             memoryStorage.delete(recordKey);
         } catch (RecordNotFoundException e){
             // ignore since it's cache
+        } finally {
+            recordsLocker.unlock(recordKey);
         }
         diskStorage.delete(recordKey);
     }
