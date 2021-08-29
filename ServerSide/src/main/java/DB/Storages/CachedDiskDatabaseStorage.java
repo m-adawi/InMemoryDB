@@ -16,25 +16,28 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
     public void write(Record record) {
         recordsLocker.lock(record.getKey());
         try {
-            writeToCache(record);
-            writeToDisk(record);
+            writeToStorages(record);
         } finally {
             recordsLocker.unlock(record.getKey());
         }
-
     }
 
-    private void writeToCache(Record record){
+    private void writeToStorages(Record record) {
         memoryStorage.write(record);
-    }
-
-    private void writeToDisk(Record record){
         diskStorage.write(record);
     }
 
     @Override
     public Record read(DatabaseKey recordKey) throws RecordNotFoundException {
         recordsLocker.lock(recordKey);
+        try {
+            return readFromStorages(recordKey);
+        } finally {
+            recordsLocker.unlock(recordKey);
+        }
+    }
+
+    private Record readFromStorages(DatabaseKey recordKey) throws RecordNotFoundException {
         Record record;
         try {
             record = memoryStorage.read(recordKey);
@@ -42,8 +45,6 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
             record = diskStorage.read(recordKey);
             // Write most recently accessed records to cache
             memoryStorage.write(record);
-        } finally {
-            recordsLocker.unlock(recordKey);
         }
         return record;
     }
@@ -52,12 +53,15 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
     public void delete(DatabaseKey recordKey) throws RecordNotFoundException{
         recordsLocker.lock(recordKey);
         try {
-            memoryStorage.delete(recordKey);
-        } catch (RecordNotFoundException e){
-            // ignore since it's cache
-        } finally {
+            deleteFromStorages(recordKey);
+        }
+        finally {
             recordsLocker.unlock(recordKey);
         }
+    }
+
+    private void deleteFromStorages(DatabaseKey recordKey) throws RecordNotFoundException {
+        memoryStorage.delete(recordKey);
         diskStorage.delete(recordKey);
     }
 

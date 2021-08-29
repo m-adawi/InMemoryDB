@@ -6,6 +6,7 @@ import DB.DatabaseKey;
 import DB.Record;
 import DB.RecordKeysCollection;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public abstract class ConditionalCommand extends Command {
     }
 
     protected List<Record> getAllRecordsSatisfiedByCondition() {
-        List<Record> satisfied = new LinkedList<>();
+        List<Record> satisfied = new ArrayList<>();
         // If the condition is IDEqualCondition return a list with that single record
         if(isOnSingleRecord()){
             DatabaseKey recordKey = ((IDEqualCondition) condition).getKey();

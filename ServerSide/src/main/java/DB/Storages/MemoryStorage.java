@@ -5,11 +5,12 @@ import DB.DatabaseKey;
 import DB.Record;
 import DB.RecordKeysCollection;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MemoryStorage implements DatabaseStorage {
-    private final Map<IntegerDatabaseKey, Record> map = new ConcurrentHashMap<>();
+    private final Map<IntegerDatabaseKey, Record> map = new HashMap<>();
     private final CacheDatabaseKeyFactory cacheDatabaseKeyFactory;
 
     public MemoryStorage(int cacheSize) {
@@ -33,11 +34,11 @@ public class MemoryStorage implements DatabaseStorage {
     }
 
     @Override
-    public void delete(DatabaseKey recordKey) throws RecordNotFoundException {
+    public void delete(DatabaseKey recordKey) {
         IntegerDatabaseKey key = cacheDatabaseKeyFactory.mapToCacheDatabaseKey(recordKey);
         Record record = map.get(key);
         if(record == null)
-            throw new RecordNotFoundException();
+            return;
         if(record.getKey().equals(recordKey))
             map.remove(key);
     }
