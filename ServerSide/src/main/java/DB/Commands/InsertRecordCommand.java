@@ -15,7 +15,7 @@ public class InsertRecordCommand extends SingleRecordCommand {
 
     @Override
     public String execute() {
-        database.insertRecord(record);
+        storage.write(record);
         return "Done";
     }
 }

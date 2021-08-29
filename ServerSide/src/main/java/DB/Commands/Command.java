@@ -1,9 +1,14 @@
 package DB.Commands;
 
 import DB.Database;
+import DB.Storages.DatabaseStorage;
 
 public abstract class Command {
-    protected final static Database database = Database.getDatabase();
+    protected DatabaseStorage storage;
+
+    public void setStorage(DatabaseStorage storage) {
+        this.storage = storage;
+    }
 
     public abstract String execute();
 }

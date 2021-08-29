@@ -2,7 +2,10 @@ package DB.Storages;
 
 import DB.*;
 
-public class CachedDiskDatabaseStorage implements DatabaseStorage {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CachedDiskDatabaseStorage extends DatabaseStorage {
     private final DatabaseStorage memoryStorage;
     private final DatabaseStorage diskStorage;
     private final RecordsLocker recordsLocker = new RecordsLocker();
@@ -25,6 +28,25 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
     private void writeToStorages(Record record) {
         memoryStorage.write(record);
         diskStorage.write(record);
+    }
+
+    @Override
+    public void write(List<Record> records) {
+        List<DatabaseKey> keyList = new ArrayList<>();
+        for(Record record : records) {
+            keyList.add(record.getKey());
+        }
+        recordsLocker.lock(keyList);
+        try {
+            writeToStorages(records);
+        } finally {
+            recordsLocker.unlock(keyList);
+        }
+    }
+
+    private void writeToStorages(List<Record> records) {
+        memoryStorage.write(records);
+        diskStorage.write(records);
     }
 
     @Override
@@ -63,6 +85,21 @@ public class CachedDiskDatabaseStorage implements DatabaseStorage {
     private void deleteFromStorages(DatabaseKey recordKey) throws RecordNotFoundException {
         memoryStorage.delete(recordKey);
         diskStorage.delete(recordKey);
+    }
+
+    @Override
+    public void delete(List<DatabaseKey> recordKeys) {
+        recordsLocker.lock(recordKeys);
+        try {
+            deleteFromStorages(recordKeys);
+        } finally {
+            recordsLocker.unlock(recordKeys);
+        }
+    }
+
+    private void deleteFromStorages(List<DatabaseKey> recordKeys) {
+        memoryStorage.delete(recordKeys);
+        diskStorage.delete(recordKeys);
     }
 
     @Override

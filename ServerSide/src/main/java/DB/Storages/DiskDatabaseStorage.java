@@ -6,7 +6,7 @@ import DB.Attributes.IntegerDatabaseKey;
 
 import java.io.*;
 
-public class DiskDatabaseStorage implements DatabaseStorage {
+public class DiskDatabaseStorage extends DatabaseStorage {
     private final File recordsDirectory;
     private final RecordKeysCollection keysCollection = new RecordKeysCollection();
 

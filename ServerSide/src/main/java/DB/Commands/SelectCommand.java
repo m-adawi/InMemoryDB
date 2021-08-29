@@ -29,26 +29,11 @@ public class SelectCommand extends ConditionalCommand {
     }
 
     @Override
-    protected void executeOnRecord(DatabaseKey recordKey) {
-        Record record = database.selectRecordByKey(recordKey);
-        executeOnRecord(record);
-    }
-
-    @Override
-    protected void executeOnRecord(Record record) {
-        tableBuilder.append('|');
-        for (StudentAttributeType attribute : attributesToBeSelected) {
-            tableBuilder.append(record.getAttributeFromItsType(attribute).getStrValue());
-            tableBuilder.append('|');
-        }
-        tableBuilder.append('\n');
-    }
-
-    @Override
     protected String executeOnListOfRecords(List<Record> recordList) {
         appendColumnNames();
-        String completionMessage =  super.executeOnListOfRecords(recordList);
-        tableBuilder.append(completionMessage);
+        for(Record record : recordList) {
+            appendRecordRow(record);
+        }
         return tableBuilder.toString();
     }
 
@@ -56,6 +41,15 @@ public class SelectCommand extends ConditionalCommand {
         tableBuilder.append('|');
         for(StudentAttributeType type : attributesToBeSelected) {
             tableBuilder.append(type.name());
+            tableBuilder.append('|');
+        }
+        tableBuilder.append('\n');
+    }
+
+    protected void appendRecordRow(Record record) {
+        tableBuilder.append('|');
+        for (StudentAttributeType attribute : attributesToBeSelected) {
+            tableBuilder.append(record.getAttributeFromItsType(attribute).getStrValue());
             tableBuilder.append('|');
         }
         tableBuilder.append('\n');

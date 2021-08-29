@@ -73,6 +73,7 @@ public class Database {
     }
 
     public String execute(Command command) {
+        command.setStorage(storage);
         return command.execute();
     }
 }

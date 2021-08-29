@@ -5,6 +5,8 @@ import DB.Conditions.Condition;
 import DB.DatabaseKey;
 import DB.Record;
 
+import java.util.List;
+
 public class UpdateCommand extends ConditionalCommand {
     private StudentAttributeType[] attributesToBeUpdated;
     private Attribute[] attributeValues;
@@ -28,17 +30,17 @@ public class UpdateCommand extends ConditionalCommand {
     }
 
     @Override
-    protected void executeOnRecord(DatabaseKey recordKey) {
-        Record record = database.selectRecordByKey(recordKey);
-        executeOnRecord(record);
+    protected String executeOnListOfRecords(List<Record> recordList) {
+        for(Record record : recordList) {
+            updateRecord(record);
+        }
+        storage.write(recordList);
+        return "Updated " + recordList.size() + " records";
     }
 
-    @Override
-    protected void executeOnRecord(Record record) {
-        DatabaseKey oldKey = record.getKey();
+    protected void updateRecord(Record record) {
         for(int i = 0; i < numberOfAttributesToBeUpdated; i++) {
             record.setAttributeFromTypeAndAnotherAttribute(attributesToBeUpdated[i], attributeValues[i]);
         }
-        database.updateRecordByKey(oldKey, record);
     }
 }

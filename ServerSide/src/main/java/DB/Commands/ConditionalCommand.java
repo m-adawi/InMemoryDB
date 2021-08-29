@@ -26,29 +26,20 @@ public abstract class ConditionalCommand extends Command {
         return executeOnListOfRecords(getAllRecordsSatisfiedByCondition());
     }
 
-    protected abstract void executeOnRecord(DatabaseKey recordKey);
-
-    protected abstract void executeOnRecord(Record record);
-
-    protected String executeOnListOfRecords(List<Record> recordList) {
-        for(Record record : recordList) {
-            executeOnRecord(record);
-        }
-        return "Done";
-    }
+    protected abstract String executeOnListOfRecords(List<Record> recordList);
 
     protected List<Record> getAllRecordsSatisfiedByCondition() {
         List<Record> satisfied = new ArrayList<>();
         // If the condition is IDEqualCondition return a list with that single record
         if(isOnSingleRecord()){
             DatabaseKey recordKey = ((IDEqualCondition) condition).getKey();
-            Record record = database.selectRecordByKey(recordKey);
+            Record record = storage.read(recordKey);
             satisfied.add(record);
             return satisfied;
         }
-        RecordKeysCollection allKeys = database.getKeysCollection();
+        RecordKeysCollection allKeys = storage.getKeysCollection();
         for (DatabaseKey recordKey : allKeys) {
-            Record record = database.selectRecordByKey(recordKey);
+            Record record = storage.read(recordKey);
             if(condition.isSatisfiedOnRecord(record))
                 satisfied.add(record);
         }

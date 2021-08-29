@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MemoryStorage implements DatabaseStorage {
+public class MemoryStorage extends DatabaseStorage {
     private final Map<IntegerDatabaseKey, Record> map = new HashMap<>();
     private final CacheDatabaseKeyFactory cacheDatabaseKeyFactory;
 
