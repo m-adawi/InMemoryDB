@@ -30,6 +30,8 @@ public class DiskDatabaseStorage extends DatabaseStorage {
         for(File secondSubDir : firstSubDirs){
             File[] recordFiles = secondSubDir.listFiles();
             for(File recordFile : recordFiles) {
+                if(!recordFile.isFile())
+                    continue;
                 IntegerDatabaseKey databaseKey = new IntegerDatabaseKey(Integer.parseInt(recordFile.getName(), 16));
                 keysCollection.addKey(databaseKey);
             }
