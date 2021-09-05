@@ -27,13 +27,15 @@ public class DiskDatabaseStorage extends DatabaseStorage {
         File[] firstSubDirs = recordsDirectory.listFiles();
         if(firstSubDirs == null)
             return;
-        for(File secondSubDir : firstSubDirs){
-            File[] recordFiles = secondSubDir.listFiles();
-            for(File recordFile : recordFiles) {
-                if(!recordFile.isFile())
-                    continue;
-                IntegerDatabaseKey databaseKey = new IntegerDatabaseKey(Integer.parseInt(recordFile.getName(), 16));
-                keysCollection.addKey(databaseKey);
+        for(File firstSubDir : firstSubDirs) {
+            File[] secondSubDirs = firstSubDir.listFiles();
+            for(File secondSubDir : secondSubDirs) {
+                File[] recordFiles = secondSubDir.listFiles();
+                for(File recordFile : recordFiles) {
+                    if(!recordFile.isFile()) continue;
+                    IntegerDatabaseKey databaseKey = new IntegerDatabaseKey(Integer.parseInt(recordFile.getName(), 16));
+                    keysCollection.addKey(databaseKey);
+                }
             }
         }
     }
