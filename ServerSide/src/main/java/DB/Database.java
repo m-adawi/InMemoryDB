@@ -1,5 +1,6 @@
 package DB;
 
+import DB.Commands.SelectCommand;
 import Server.ServerConfigurations;
 import DB.Commands.Command;
 import DB.Storages.CachedDiskDatabaseStorage;
@@ -75,5 +76,10 @@ public class Database {
     public String execute(Command command) {
         command.setStorage(storage);
         return command.execute();
+    }
+
+    public String[][] executeQuery(SelectCommand command) {
+        command.setStorage(storage);
+        return command.executeAndGetTable();
     }
 }

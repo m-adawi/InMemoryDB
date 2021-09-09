@@ -28,6 +28,21 @@ public class SelectCommand extends ConditionalCommand {
         }
     }
 
+    public String[][] executeAndGetTable() {
+        List<Record> recordList = getAllRecordsSatisfiedByCondition();
+        String[][] table = new String[recordList.size()+1][attributesToBeSelected.length];
+        for(int j = 0; j < attributesToBeSelected.length; j++) {
+            table[0][j] = attributesToBeSelected[j].name();
+        }
+        for(int i = 1; i < table.length; i++) {
+            Record record = recordList.get(i-1);
+            for(int j = 0; j < table[i].length; j++) {
+                table[i][j] = record.getAttributeFromItsType(attributesToBeSelected[j]).getStrValue();
+            }
+        }
+        return table;
+    }
+
     @Override
     protected String executeOnListOfRecords(List<Record> recordList) {
         appendColumnNames();
@@ -54,4 +69,6 @@ public class SelectCommand extends ConditionalCommand {
         }
         tableBuilder.append('\n');
     }
+
+
 }
