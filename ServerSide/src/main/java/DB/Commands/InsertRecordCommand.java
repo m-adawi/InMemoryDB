@@ -1,5 +1,6 @@
 package DB.Commands;
 
+import DB.InvalidDatabaseOperationException;
 import DB.Record;
 
 public class InsertRecordCommand extends SingleRecordCommand {
@@ -15,6 +16,8 @@ public class InsertRecordCommand extends SingleRecordCommand {
 
     @Override
     public String execute() {
+        if(storage.getKeysCollection().containsKey(record.getKey()))
+            throw new InvalidDatabaseOperationException("Record with ID: " + record.getKey() + " Already exists");
         storage.write(record);
         return "Done";
     }

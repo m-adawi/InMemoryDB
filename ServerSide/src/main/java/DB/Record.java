@@ -64,6 +64,6 @@ public class Record implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(map);
+        return getKey().hashCode();
     }
 }
