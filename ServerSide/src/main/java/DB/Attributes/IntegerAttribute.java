@@ -44,8 +44,6 @@ public abstract class IntegerAttribute implements Attribute {
 
     @Override
     public String getStrValue() {
-        if(value == 0)
-            return "Not assigned";
         return String.valueOf(value);
     }
 

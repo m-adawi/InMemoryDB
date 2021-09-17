@@ -8,7 +8,7 @@ public abstract class StringAttribute implements Attribute {
     protected String value;
 
     public StringAttribute() {
-        value = "Not assigned";
+        value = "";
     }
 
     public StringAttribute(String value) {
