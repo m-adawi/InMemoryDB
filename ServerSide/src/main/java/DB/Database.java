@@ -22,12 +22,12 @@ public class Database {
 
     public void insertRecord(Record record) {
         if(storage.containsKey(record.getKey()))
-            throwRecordAlreadyExistsException();
+            throwRecordAlreadyExistsException(record.getKey());
         storage.write(record);
     }
 
-    private void throwRecordAlreadyExistsException() throws InvalidDatabaseOperationException {
-        throw new InvalidDatabaseOperationException("Record already exists");
+    private void throwRecordAlreadyExistsException(DatabaseKey key) throws InvalidDatabaseOperationException {
+        throw new InvalidDatabaseOperationException("Record with ID: " + key.hashCode() + " already exists");
     }
 
     public Record selectRecordByKey(DatabaseKey recordKey) {
@@ -55,7 +55,7 @@ public class Database {
         if(!record.getKey().equals(recordKey)) {
             // If the new key already exists, raise exception
             if(storage.containsKey(record.getKey()))
-                throwRecordAlreadyExistsException();
+                throwRecordAlreadyExistsException(recordKey);
             deleteRecordByKey(recordKey);
         }
         storage.write(record);
