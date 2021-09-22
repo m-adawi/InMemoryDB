@@ -64,6 +64,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>Server</finalName>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <transformers>
                                 <transformer implementation=

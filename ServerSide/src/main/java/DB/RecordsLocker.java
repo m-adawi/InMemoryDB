@@ -16,8 +16,8 @@ public class RecordsLocker {
     }
 
     public void lock(DatabaseKey recordKey) {
-        if (!lockMap.containsKey(recordKey))
-            lockMap.put(recordKey, new ReentrantLock());
+        if(!lockMap.containsKey(recordKey))
+            lockMap.putIfAbsent(recordKey, new ReentrantLock());
         lockMap.get(recordKey).lock();
     }
 

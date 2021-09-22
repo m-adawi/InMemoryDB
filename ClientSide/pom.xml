@@ -38,6 +38,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>Client</finalName>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <transformers>
                                 <transformer implementation=
